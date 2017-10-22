@@ -25,9 +25,11 @@ io.on("connection", socket => {
     generateMessage("Admin", "New user joined")
   );
 
-  socket.on("createMessage", message => {
+  // callbackを設定するとフロントのcallbackに値を渡して実行される。
+  socket.on("createMessage", (message, callback) => {
     console.log("createMessage", message);
     io.emit("newMessage", generateMessage(message.from, message.text));
+    callback("This is from the server");
   });
 
   socket.on("disconnect", () => {
